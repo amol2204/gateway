@@ -1,0 +1,54 @@
+<html>
+ <head>
+   <title>Js Element Demo</title>
+ </head>
+ <body>
+   <!-- Card paymode container -->
+   <div id="card">Card details </div>
+   
+   <script>
+   function onScriptLoad(){
+      //Check if CheckoutJS is available
+      if(window.Paytm && window.Paytm.CheckoutJS){
+        //Add callback function to CheckoutJS onLoad function
+        window.Paytm.CheckoutJS.onLoad(function excecuteAfterCompleteLoad() {
+          //Config
+          var config = {
+            flow:"DEFAULT",
+            hidePaymodeLabel: false,
+            data:{
+              orderId:"ORDERID_123456789",
+              amount: "2.00",
+              token:"d48f03822d51484fb79dd08e108eae241718796892600",
+              tokenType:"TXN_TOKEN"
+            },
+            merchant:{
+              mid:"NSEAca36952692078973",
+			  "redirect": true,
+			  "multipleWindowWebview":true
+            },
+            handler: {
+              notifyMerchant: function(eventType, data) {
+			  console.log("call from notify merchant handler");
+                console.log("notify merchant called", eventType, data);
+              },
+			  transactionStatus:function (paymentStatus){
+			  console.log("call from notify transactionStatus handler");
+			  console.log("paymentStatus => ",paymentStatus);              
+			} 
+            }
+          };
+
+          //Create elements instance
+          var elements = window.Paytm.CheckoutJS.elements(config);
+          //Create card element
+          var cardElement = elements.createElement(window.Paytm.CheckoutJS.ELEMENT_PAYMODE.NB, {root: "#card", style: {bodyBackgroundColor: ""}});
+          //Render element
+          cardElement.invoke();
+        });
+      }
+    }
+   </script>
+   <script type="application/javascript" crossorigin="anonymous" src="https://securegw-stage.paytm.in/merchantpgpui/checkoutjs/merchants/NSEAca36952692078973.js" onload="onScriptLoad();"></script>
+ </body>
+</html>
