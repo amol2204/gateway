@@ -2,9 +2,11 @@
 Hello.
 
 <script>
-const formData = new FormData();
+var formData    = new FormData(this);
+var formKeys    = formData.keys();
+var formEntries = formData.entries();
 
-  for (const key of formData.keys()) {
-  console.log(key);
-}
+do {
+  console.log(formEntries.next().value);
+} while (!formKeys.next().done)
 </script></body></html>
