@@ -2,6 +2,9 @@
 Hello.
 
 <script>
-  var formData = new FormData(document.querySelector('form'))
-  console.log("formdata -- " + formData);
+var xhr = new XMLHttpRequest();
+  console.log("HELLO");
+  console.log(this.responseText);
+  var data = JSON.parse(this.responseText);
+  console.log(data);
 </script></body></html>
